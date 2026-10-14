@@ -1,5 +1,9 @@
 const { promisify } = require('node:util');
-const { scrypt: scryptCallback, timingSafeEqual } = require('node:crypto');
+const {
+  randomBytes,
+  scrypt: scryptCallback,
+  timingSafeEqual,
+} = require('node:crypto');
 const Signup = require('../models/Signup');
 
 const scrypt = promisify(scryptCallback);
@@ -16,17 +20,30 @@ exports.postLogin = async (req, res) => {
     });
   }
 
-  const user = await Signup.findOne({ emailaddress }).select('+passwordhash');
+  const user = await Signup.findOne({ emailaddress })
+    .select('+passwordhash +password');
   if (!user) {
     return res.status(401).json({ error: 'Invalid email or password' });
   }
 
-  const [salt, storedHash] = user.passwordhash.split(':');
-  const submittedHash = await scrypt(password, salt, 64);
-  const expectedHash = Buffer.from(storedHash, 'hex');
+  let passwordMatches = false;
+  if (typeof user.passwordhash === 'string') {
+    const match = /^([a-f0-9]{32}):([a-f0-9]{128})$/i.exec(user.passwordhash);
+    if (match) {
+      const submittedHash = await scrypt(password, match[1], 64);
+      const expectedHash = Buffer.from(match[2], 'hex');
+      passwordMatches = timingSafeEqual(expectedHash, submittedHash);
+    }
+  } else if (typeof user.password === 'string' && user.password === password) {
+    const salt = randomBytes(16).toString('hex');
+    const hash = await scrypt(password, salt, 64);
+    user.passwordhash = `${salt}:${hash.toString('hex')}`;
+    user.password = undefined;
+    await user.save();
+    passwordMatches = true;
+  }
 
-  if (expectedHash.length !== submittedHash.length ||
-      !timingSafeEqual(expectedHash, submittedHash)) {
+  if (!passwordMatches) {
     return res.status(401).json({ error: 'Invalid email or password' });
   }
 

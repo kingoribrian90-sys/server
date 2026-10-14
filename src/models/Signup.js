@@ -11,6 +11,7 @@ const signupSchema = new mongoose.Schema(
       trim: true,
     },
     passwordhash: { type: String, required: true, select: false },
+    password: { type: String, select: false },
   },
   { timestamps: true }
 );

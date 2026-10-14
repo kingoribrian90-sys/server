@@ -1,0 +1,23 @@
+$kind: http-request
+url: http://localhost:5000/api/v1/listings
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"county\": \"Nairobi\",\r
+
+    \  \"locality\": \"Kilimani\",\r
+
+    \  \"houseType\": \"Apartment\",\r
+
+    \  \"electricityBillingmode\": \"Prepaid\",\r
+
+    \  \"waterBillingmode\": \"Included\",\r
+
+    \  \"monthlyBudget\": 25000,\r
+
+    \  \"emailAddress\": \"sam@example.com\"\r
+
+    }"
+order: 1791789396198

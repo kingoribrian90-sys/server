@@ -1,0 +1,13 @@
+$kind: http-request
+url: http://localhost:5000/api/v1/payments/listing-fee
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"emailAddress\": \"sam@example.com\",\r
+
+    \  \"safaricomNumber\": \"+254700000000\"\r
+
+    }"
+order: 3884595666660346

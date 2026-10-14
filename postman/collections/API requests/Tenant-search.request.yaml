@@ -1,0 +1,15 @@
+$kind: http-request
+url: http://localhost:5000/api/v1/tenant-searches
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"county\": \"Nairobi\",\r
+
+    \  \"locality\": \"Kilimani\",\r
+
+    \  \"budgetRange\": \"10000-25000\"\r
+
+    }"
+order: 1772349692136239
