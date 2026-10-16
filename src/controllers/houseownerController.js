@@ -6,8 +6,8 @@ exports.postHouseOwner = async (req, res) => {
     locality: req.body.locality,
     housetype: req.body.housetype || req.body.houseType,
     electricitybillingmode:
-      req.body.electricitybillingmode || req.body.electricityBillingmode,
-    waterbillingmode: req.body.waterbillingmode || req.body.waterBillingmode,
+      req.body.electricitybillingmode || req.body.electricityBillingMode,
+    waterbillingmode: req.body.waterbillingmode || req.body.waterBillingMode,
     monthlybudget: req.body.monthlybudget ?? req.body.monthlyBudget,
     emailaddress: req.body.emailaddress || req.body.emailAddress,
   });

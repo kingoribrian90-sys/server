@@ -13,7 +13,11 @@ exports.getListings = async (req, res) => {
   }
 
   const filter = { status: 'active' };
-  if (req.query.county) filter.county = String(req.query.county).trim();
+  if (req.query.county) {
+    const county = String(req.query.county).trim();
+    const countyName = county.replace(/\s+County$/i, '').trim();
+    filter.county = { $in: [county, countyName, `${countyName} County`] };
+  }
   if (req.query.locality) filter.locality = String(req.query.locality).trim();
 
   const minimum = req.query.minRent === undefined
