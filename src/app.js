@@ -4,12 +4,17 @@ const helmet = require('helmet');
 
 const app = express();
 
+app.use((req, res, next) => { // DEBUG-TEMP
+  console.log('REQ', req.method, req.originalUrl); // DEBUG-TEMP
+  next(); // DEBUG-TEMP
+}); // DEBUG-TEMP
+
 app.use(cors(process.env.CLIENT_URL ? { origin: process.env.CLIENT_URL } : {}));
 app.use(helmet());
 app.use(express.json());
 
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok' });
+  res.json({ ok: true });
 });
 
 app.use('/api/v1/listings', require('./routes/listings'));
