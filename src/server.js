@@ -3,12 +3,10 @@ require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 process.on('unhandledRejection', (reason) => { // DEBUG-TEMP
   console.error('Unhandled promise rejection:', reason); // DEBUG-TEMP
-  process.exit(1); // DEBUG-TEMP
 }); // DEBUG-TEMP
 
 process.on('uncaughtException', (error) => { // DEBUG-TEMP
   console.error('Uncaught exception:', error); // DEBUG-TEMP
-  process.exit(1); // DEBUG-TEMP
 }); // DEBUG-TEMP
 
 const app = require('./app');
