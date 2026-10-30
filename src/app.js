@@ -9,7 +9,10 @@ app.use((req, res, next) => { // DEBUG-TEMP
   next(); // DEBUG-TEMP
 }); // DEBUG-TEMP
 
-app.use(cors(process.env.CLIENT_URL ? { origin: process.env.CLIENT_URL } : {}));
+app.use(cors(process.env.CLIENT_URL ? { origin: [ 
+  "http://localhost:5173/",
+  "https://house-hunting-web.onrender.com",
+] } : {}));
 app.use(helmet());
 app.use(express.json());
 
