@@ -1,5 +1,6 @@
 const BASE = import.meta.env.VITE_API_URL;
 fetch('${API_URL}/api');
+console.log("API URL:", import.meta.env.VITE_API_URL);
 
 export async function api(path, options = {}) {
     const res = await fetch(`${BASE}${path}`, {
